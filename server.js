@@ -313,7 +313,7 @@ app.post('/api/send-campaign', async (req, res) => {
 });
 
 // Fallback to index.html for SPA routing
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
