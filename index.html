@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mail Manager - Mobile Email Campaign Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Main App Shell -->
+  <div class="app-container">
+
+    <!-- Top Navigation Bar -->
+    <header class="app-header">
+      <div class="header-left">
+        <button class="icon-btn round-btn" id="menuToggleBtn" title="মেনু">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="7" x2="20" y2="7"></line>
+            <line x1="4" y1="12" x2="14" y2="12"></line>
+            <line x1="4" y1="17" x2="18" y2="17"></line>
+          </svg>
+        </button>
+        <div class="header-branding">
+          <h1 class="app-title">Mail Manager</h1>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="pill-btn-icon" id="quickComposeBtn" title="নতুন ক্যাম্পেইন">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" id="settingsToggleBtn" title="সেটিংস ও জিমেইল সংযোগ">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="1"></circle>
+            <circle cx="19" cy="12" r="1"></circle>
+            <circle cx="5" cy="12" r="1"></circle>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Subheader badge -->
+    <div class="sub-header-bar">
+      <span class="sub-header-text">MOBILE EMAIL CAMPAIGN DASHBOARD</span>
+      <span class="status-indicator-badge" id="smtpStatusBadge">
+        <span class="status-dot"></span>
+        <span id="smtpStatusText">Gmail কানেক্ট করুন</span>
+      </span>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- Metrics 2x2 Grid (Matches Screenshot) -->
+      <section class="stats-grid">
+        <!-- Contacts Card -->
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-icon-wrapper user-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-value" id="statContactsCount">50</div>
+          <div class="stat-label">Contacts</div>
+        </div>
+
+        <!-- Sent Card -->
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-icon-wrapper sent-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-value" id="statSentCount">0</div>
+          <div class="stat-label">Sent</div>
+        </div>
+
+        <!-- Delivered Card -->
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-icon-wrapper delivered-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-value" id="statDeliveredCount">0</div>
+          <div class="stat-label">Delivered</div>
+        </div>
+
+        <!-- Failed Card -->
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <div class="stat-icon-wrapper failed-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-value" id="statFailedCount">0</div>
+          <div class="stat-label">Failed</div>
+        </div>
+      </section>
+
+      <!-- New Email Campaign Form -->
+      <section class="campaign-section">
+        <h2 class="section-title">New Email Campaign</h2>
+
+        <div class="form-container">
+
+          <!-- Recipient List Field -->
+          <div class="form-group">
+            <div class="label-row">
+              <label for="recipientsInput" class="form-label">Recipient List</label>
+              <div class="recipient-actions">
+                <button type="button" class="btn-micro" id="loadSampleRecipientsBtn" title="৫০টি নমুনা ইমেইল লোড করুন">+ ৫০ স্যাম্পল</button>
+                <label for="csvFileInput" class="btn-micro btn-micro-file" title="CSV বা TXT ফাইল ইমপোর্ট করুন">
+                  CSV ইমপোর্ট
+                  <input type="file" id="csvFileInput" accept=".csv,.txt" style="display: none;">
+                </label>
+                <button type="button" class="btn-micro" id="clearRecipientsBtn">ক্লিয়ার</button>
+              </div>
+            </div>
+            <textarea
+              id="recipientsInput"
+              class="form-control recipient-textarea"
+              placeholder="Paste email addresses / Import CSV&#10;প্রতি লাইনে একটি বা কমা (,) দিয়ে আলাদা করুন"
+              rows="3"
+            ></textarea>
+            <div class="input-helper">
+              <span id="detectedCountText">0 recipient(s) detected</span>
+              <span class="helper-hint">৫০ জনের বেশি একসাথে সেন্ড করার সময় নিরাপদে পাঠানোর বিরতি রাখুন</span>
+            </div>
+          </div>
+
+          <!-- Subject Field -->
+          <div class="form-group">
+            <label for="subjectInput" class="form-label">Subject</label>
+            <input
+              type="text"
+              id="subjectInput"
+              class="form-control"
+              value="Joining Letter Collection Notice"
+              placeholder="ইমেইলের বিষয় লিখুন..."
+            >
+          </div>
+
+          <!-- Email Content Box (Matches Screenshot) -->
+          <div class="form-group">
+            <label class="form-label">Email Content</label>
+            
+            <div class="content-designer-box">
+
+              <!-- Salutation / Greeting -->
+              <div class="content-field">
+                <input
+                  type="text"
+                  id="greetingInput"
+                  class="designer-input bold-input"
+                  value="Dear Candidate,"
+                  placeholder="সম্বোধন (e.g. Dear Candidate,)"
+                >
+              </div>
+
+              <!-- Notice Subtext -->
+              <div class="content-field">
+                <input
+                  type="text"
+                  id="noticeSubtextInput"
+                  class="designer-input"
+                  value="Please read the following notice carefully."
+                  placeholder="নোটিশ সূচনা বাক্য..."
+                >
+              </div>
+
+              <!-- Upload Inline Header Image Box -->
+              <div class="inline-image-uploader-box" id="dropZoneBox">
+                <input type="file" id="imageFileInput" accept="image/*" style="display:none;">
+
+                <!-- Empty State: matches screenshot -->
+                <div class="uploader-empty-state" id="uploaderEmptyState">
+                  <div class="uploader-icon-box">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                  </div>
+                  <span class="uploader-title">Upload Inline Image</span>
+                  <span class="uploader-subtext">হেডার ব্যানার ছবি যুক্ত করুন (PNG, JPG, WebP)</span>
+                </div>
+
+                <!-- Preview State (when image is loaded) -->
+                <div class="uploader-preview-state" id="uploaderPreviewState" style="display: none;">
+                  <div class="preview-img-wrapper">
+                    <img id="headerImagePreview" src="" alt="Header Banner Preview">
+                  </div>
+                  <div class="preview-info-row">
+                    <span id="imageFileName">banner.jpg</span>
+                    <button type="button" class="btn-remove-img" id="removeImageBtn" title="ছবি মুছে ফেলুন">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                      রিমুভ
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Body Message Textarea -->
+              <div class="content-field">
+                <textarea
+                  id="bodyMessageInput"
+                  class="designer-textarea"
+                  rows="3"
+                  placeholder="বডি মেসেজ বা বিস্তারিত নির্দেশনা এখানে লিখুন... (ঐচ্ছিক)"
+                >Congratulations on your selection! Your joining letter is ready. Please report to the HR desk on Monday at 10:00 AM with your original academic certificates and national ID.</textarea>
+              </div>
+
+              <!-- Sign-off / Regards -->
+              <div class="content-field sign-off-field">
+                <div class="signoff-label">Regards,</div>
+                <input
+                  type="text"
+                  id="closingSenderInput"
+                  class="designer-input signoff-input"
+                  value="Administration"
+                  placeholder="প্রেরকের পদবী বা প্রতিষ্ঠান..."
+                >
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Bottom Floating / Sticky Action Bar (Matches Screenshot) -->
+      <div class="bottom-action-wrapper">
+        <div class="action-dock">
+          <!-- Live Preview button -->
+          <button type="button" class="dock-circle-btn" id="openPreviewBtn" title="ইমেইল প্রিভিউ দেখুন">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+
+          <!-- Quick Test button -->
+          <button type="button" class="dock-circle-btn" id="openTestModalBtn" title="টেস্ট ইমেইল পাঠান">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Primary Send Campaign Button (matches screenshot green pill button) -->
+          <button type="button" class="btn-send-campaign" id="startCampaignBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            <span>Send Campaign</span>
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- MODAL: Email Live Preview -->
+  <div class="modal-overlay" id="previewModal" style="display: none;">
+    <div class="modal-card preview-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 class="modal-title">ইমেইল প্রিভিউ</h3>
+          <span class="modal-subtitle">গ্রাহক জিমেইলে যেভাবে এই মেইলটি দেখতে পাবেন</span>
+        </div>
+        <button class="modal-close-btn" id="closePreviewModalBtn">&times;</button>
+      </div>
+
+      <!-- Preview Device Mode Toggle -->
+      <div class="preview-device-bar">
+        <span class="preview-mode-tag active" id="viewMobileBtn">📱 Mobile View</span>
+        <span class="preview-mode-tag" id="viewDesktopBtn">💻 Desktop View</span>
+      </div>
+
+      <!-- Email Render Screen -->
+      <div class="preview-body" id="previewContainer">
+        <div class="email-mockup-frame" id="emailMockupFrame">
+          <!-- Email Top Bar info -->
+          <div class="email-mockup-header">
+            <div class="mockup-avatar">M</div>
+            <div class="mockup-meta">
+              <div class="mockup-from" id="previewFrom">Sender: <strong>Administration &lt;your-email@gmail.com&gt;</strong></div>
+              <div class="mockup-subject" id="previewSubject">Joining Letter Collection Notice</div>
+              <div class="mockup-to">To: <em>candidate@example.com</em></div>
+            </div>
+          </div>
+
+          <!-- Email Inner Content -->
+          <div class="email-mockup-content">
+            <h3 id="previewGreeting" class="preview-salutation">Dear Candidate,</h3>
+            <p id="previewNotice" class="preview-subnotice">Please read the following notice carefully.</p>
+            
+            <div id="previewImageWrapper" class="preview-banner-container" style="display: none;">
+              <img id="previewModalImg" src="" alt="Notice Banner">
+            </div>
+
+            <div id="previewBodyText" class="preview-body-paragraphs">
+              Congratulations on your selection! Your joining letter is ready.
+            </div>
+
+            <div class="preview-signoff">
+              <div>Regards,</div>
+              <strong id="previewClosing">Administration</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="closePreviewFooterBtn">বন্ধ করুন</button>
+        <button type="button" class="btn-primary" id="confirmFromPreviewBtn">সবকিছু ঠিক আছে, পাঠান</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Settings & Gmail Configuration -->
+  <div class="modal-overlay" id="settingsModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 class="modal-title">জিমেইল ও সার্ভার সেটিংস</h3>
+          <span class="modal-subtitle">আপনার জিমেইল আইডি ও অ্যাপ পাসওয়ার্ড সেট করুন</span>
+        </div>
+        <button class="modal-close-btn" id="closeSettingsModalBtn">&times;</button>
+      </div>
+
+      <div class="modal-body form-body">
+        
+        <div class="info-alert">
+          <div class="alert-icon">💡</div>
+          <div class="alert-text">
+            <strong>গুগল অ্যাপ পাসওয়ার্ড কি?</strong><br>
+            জিমেইল থেকে অটোমেটিক মেইল পাঠানোর জন্য গুগলের সাধারণ পাসওয়ার্ডের বদলে <strong>16 ডিজিটের App Password</strong> প্রয়োজন হয়।
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="gmailUserInput">আপনার জিমেইল এড্রেস</label>
+          <input
+            type="email"
+            id="gmailUserInput"
+            class="form-control"
+            placeholder="example@gmail.com"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="gmailPassInput">
+            জিমেইল অ্যাপ পাসওয়ার্ড (16 Characters)
+          </label>
+          <div class="input-with-action">
+            <input
+              type="password"
+              id="gmailPassInput"
+              class="form-control"
+              placeholder="abcd efgh ijkl mnop"
+            >
+            <button type="button" class="btn-toggle-eye" id="togglePassVisibility" title="পাসওয়ার্ড দেখুন">👁️</button>
+          </div>
+          <div class="field-hint">
+            <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener">
+              গুগল একাউন্ট থেকে অ্যাপ পাসওয়ার্ড তৈরি করতে এখানে ক্লিক করুন ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="senderNameInput">প্রেরকের নাম (Sender Display Name)</label>
+          <input
+            type="text"
+            id="senderNameInput"
+            class="form-control"
+            placeholder="e.g. HR Department / Administration"
+            value="Administration"
+          >
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-half">
+            <label class="form-label" for="delayInput">প্রতি মেইলের মাঝে বিরতি (সেকেন্ড)</label>
+            <input
+              type="number"
+              id="delayInput"
+              class="form-control"
+              min="0.5"
+              max="10"
+              step="0.5"
+              value="1.5"
+            >
+            <span class="field-hint">১.৫ - ২ সেকেন্ড দিলে স্প্যাম হিসেবে ব্লক হবে না</span>
+          </div>
+
+          <div class="form-group col-half">
+            <label class="form-label" for="apiEndpointInput">সার্ভার API URL</label>
+            <input
+              type="text"
+              id="apiEndpointInput"
+              class="form-control"
+              placeholder="/api অথবা http://vps-ip:3000"
+              value=""
+            >
+            <span class="field-hint">লোকাল বা ডকারে চললে ফাঁকা রাখুন</span>
+          </div>
+        </div>
+
+        <div class="test-connection-box">
+          <button type="button" class="btn-secondary" id="testSmtpBtn">
+            🔌 সংযোগ পরীক্ষা করুন (Test Connection)
+          </button>
+          <div id="smtpTestResult" class="test-result-text"></div>
+        </div>
+
+        <!-- VPS / Docker Instruction Collapsible -->
+        <div class="accordion-item">
+          <button type="button" class="accordion-header" id="dockerAccordionBtn">
+            <span>🐳 আপনার ভিপিএস সার্ভারে ডকার দিয়ে চালানোর উপায়</span>
+            <span class="accordion-arrow">▼</span>
+          </button>
+          <div class="accordion-content" id="dockerAccordionContent" style="display: none;">
+            <p style="font-size: 13px; color: #4b5563; margin-top: 8px;">
+              আপনার ভিপিএস সার্ভারে SSH দিয়ে ঢুকে এই ৩টি কমান্ড রান করুন:
+            </p>
+            <pre class="code-block"><code>git clone https://github.com/adhikaryraju024-design/first-project.git
+cd first-project
+docker compose up -d --build</code></pre>
+            <p style="font-size: 13px; color: #4b5563;">
+              এরপর ব্রাউজারে <code>http://আপনার-ভিপিএস-আইপি:3000</code> ওপেন করলেই ড্যাশবোর্ড চালু হয়ে যাবে!
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="closeSettingsFooterBtn">বাতিল</button>
+        <button type="button" class="btn-primary" id="saveSettingsBtn">সেটিংস সেভ করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Test Single Email -->
+  <div class="modal-overlay" id="testEmailModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 class="modal-title">টেস্ট ইমেইল পাঠান</h3>
+          <span class="modal-subtitle">৫০ জনকে একসাথে পাঠানোর আগে নিজে একটি টেস্ট করে দেখুন</span>
+        </div>
+        <button class="modal-close-btn" id="closeTestModalBtn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="testRecipientInput">টেস্ট ইমেইল রিসিভার এড্রেস</label>
+          <input
+            type="email"
+            id="testRecipientInput"
+            class="form-control"
+            placeholder="your-personal-email@gmail.com"
+          >
+          <span class="field-hint">এই ঠিকানায় হেডার ছবি সহ পুরো ইমেইলটির একটি পরীক্ষামূলক কপি পাঠানো হবে।</span>
+        </div>
+
+        <div id="testEmailStatus" class="test-result-text"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="closeTestFooterBtn">বাতিল</button>
+        <button type="button" class="btn-primary" id="sendTestEmailSubmitBtn">
+          ✉️ টেস্ট ইমেইল পাঠান
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Bulk Campaign Sending Progress -->
+  <div class="modal-overlay" id="campaignProgressModal" style="display: none;">
+    <div class="modal-card campaign-progress-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 class="modal-title" id="campaignModalTitle">ক্যাম্পেইন পাঠানো হচ্ছে...</h3>
+          <span class="modal-subtitle" id="campaignModalSubtitle">দয়া করে পেজটি রিফ্রেশ করবেন না</span>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Big Progress Meter -->
+        <div class="progress-meter-box">
+          <div class="progress-circle-stats">
+            <span class="progress-percentage" id="progressPercentage">0%</span>
+            <span class="progress-fraction" id="progressFraction">0 / 50</span>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Current sending status banner -->
+        <div class="current-sending-status">
+          <span class="spinner-dot"></span>
+          <span id="currentRecipientSending">শুরু করা হচ্ছে...</span>
+        </div>
+
+        <!-- Live Activity Log Table -->
+        <div class="activity-log-container">
+          <div class="log-header">
+            <span>লাইভ সেন্ডিং লগ</span>
+            <span id="logCounter" style="color: #6b7280; font-size: 12px;">0 টি মেইল</span>
+          </div>
+          <div class="log-list" id="activityLogList">
+            <!-- Dynamically appended items -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer campaign-modal-footer">
+        <button type="button" class="btn-danger" id="abortCampaignBtn">ক্যাম্পেইন থামান (Stop)</button>
+        <button type="button" class="btn-primary" id="finishCampaignBtn" style="display: none;">সম্পন্ন হয়েছে (বন্ধ করুন)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
