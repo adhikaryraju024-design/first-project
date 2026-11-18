@@ -1,0 +1,10 @@
+services:
+  mail-manager:
+    build: .
+    container_name: mail_manager_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
